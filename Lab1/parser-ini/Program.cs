@@ -37,6 +37,9 @@ namespace Program
       catch (BadFormatOfFileException ex)
       { Console.WriteLine($"Caught format of file exception: {ex.Message}"); }
 
+      catch(BadFormatOfStringException ex)
+      { Console.WriteLine($"Caught format of string exception: {ex.Message}"); }
+
       catch (Exception ex)
       { Console.WriteLine($"Caught system exception: {ex.Message}"); }
     

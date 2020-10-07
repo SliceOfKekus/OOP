@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\parser-ini\\parser-ini\\parser-ini.csproj",
+      "projectUniqueName": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\Lab1\\parser-ini\\parser-ini.csproj",
       "projectName": "parser-ini",
-      "projectPath": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\parser-ini\\parser-ini\\parser-ini.csproj",
+      "projectPath": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\Lab1\\parser-ini\\parser-ini.csproj",
       "packagesPath": "C:\\Users\\SliceOfKekus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\parser-ini\\parser-ini\\obj\\",
+      "outputPath": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\Lab1\\parser-ini\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\SliceOfKekus\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -9,8 +9,10 @@ namespace IniFileParser
   class Section
   {
     string nameOfSection;
-    Dictionary<string, string> fields;
-   
+    public Dictionary<string, string> fields;
+
+    public string GetName()
+    { return nameOfSection; }
     public Section(string name)
     { 
       nameOfSection = name; 
@@ -34,15 +36,13 @@ namespace IniFileParser
     private void IsThisStringCorrect(string currentLine)
     {
       int sizeOfString = currentLine.Length;
-      string[] unacceptbleSymbols = { "#", "[", "]", "?", "<", ">", "!"};
+      string[] unacceptbleSymbols = { "#", "[", "]", "?", "<", ">", "!", " ", "{", "}" };
 
       foreach (string symbol in unacceptbleSymbols)
       { currentLine = currentLine.Replace(symbol, ""); }
 
       if (sizeOfString != currentLine.Length)
       { throw new BadFormatOfStringException("Format of file is incorrect!"); }
-      else
-      { return; }
     }
 
     private void ParsingNameOfSection(string currentLine)
@@ -59,28 +59,54 @@ namespace IniFileParser
 
     private void ParsingField(string currentLine)
     {
-      string name;
-      string value;
+      
+      int indexOfFieldSeparator = currentLine.IndexOf(" = ");
+      int indexOfComment = currentLine.IndexOf(";");
+
+      if (indexOfFieldSeparator < 0)
+        throw new BadFormatOfStringException("Format of one field in this file is incorrect!");
+      else 
+      {
+        if (indexOfComment < 0)
+          indexOfComment = currentLine.Length + 1;
+
+        int lengthOfValuableString = indexOfComment - 1 - (indexOfFieldSeparator + 3);
+        string name = currentLine.Substring(0, indexOfFieldSeparator);
+        string value = currentLine.Substring(indexOfFieldSeparator + 3, lengthOfValuableString);
+
+        IsThisStringCorrect(name);
+        IsThisStringCorrect(value);
+
+        AddFieldToCurrentSection(sections.Count - 1, name, value);
+      }
+
     }
     public void ParsingIniFile(string[] readFile)
     {
       if (readFile[0][0] != '[')
       { throw new BadFormatOfFileException("Format of file is incorrect!"); }
 
-      for(int i = 0; i < readFile.Length; i++)
+      for (int i = 0; i < readFile.Length; i++)
       {
         ParsingNameOfSection(readFile[i]);
         i++;
 
-        while (readFile[i] != "\n")
+        while ((i < readFile.Length) && readFile[i] != "")
         {
           ParsingField(readFile[i]);
 
           i++;
         }
 
-      }     
+      }  
 
+      foreach (Section currentSection in this.sections)
+      {
+        Console.WriteLine($"This is section named {currentSection.GetName()}");
+        
+        foreach(KeyValuePair <string, string> fields in currentSection.fields)
+        { Console.WriteLine($"{fields.Key}, {fields.Value}"); }
+      }
     }
 
   }
