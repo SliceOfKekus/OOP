@@ -27,6 +27,7 @@ namespace IniFileParser
 
     public IniFile()
     { sections = new List<Section>(); }
+    
     private void AddSection(string name)
     { sections.Add(new Section(name)); }
 
