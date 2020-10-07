@@ -1,0 +1,13 @@
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\bin\Debug\netcoreapp3.1\parser-ini.exe
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\bin\Debug\netcoreapp3.1\parser-ini.deps.json
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\bin\Debug\netcoreapp3.1\parser-ini.runtimeconfig.json
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\bin\Debug\netcoreapp3.1\parser-ini.runtimeconfig.dev.json
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\bin\Debug\netcoreapp3.1\parser-ini.dll
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\bin\Debug\netcoreapp3.1\parser-ini.pdb
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\obj\Debug\netcoreapp3.1\parser-ini.csprojAssemblyReference.cache
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\obj\Debug\netcoreapp3.1\parser-ini.AssemblyInfoInputs.cache
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\obj\Debug\netcoreapp3.1\parser-ini.AssemblyInfo.cs
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\obj\Debug\netcoreapp3.1\parser-ini.csproj.CoreCompileInputs.cache
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\obj\Debug\netcoreapp3.1\parser-ini.dll
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\obj\Debug\netcoreapp3.1\parser-ini.pdb
+C:\Users\SliceOfKekus\Documents\OOP (C#)\parser-ini\parser-ini\obj\Debug\netcoreapp3.1\parser-ini.genruntimeconfig.cache
