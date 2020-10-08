@@ -7,32 +7,7 @@ using System.Text.RegularExpressions;
 using MyOwnExceptions;
 
 namespace IniFileParser
-{  
-  internal class Section
-  {
-    public string NameOfSection { get; }
-    private Dictionary<string, string> fields;
-
-    public KeyValuePair<string, string> LookingForField(string field)
-    {
-      foreach (KeyValuePair<string, string> pair in fields)
-        if (pair.Key == field)
-          return pair;
-
-      throw new NotFoundException("Field with this name wasn't found!\n");
-    }
-
-    public Section(string name)
-    { 
-      NameOfSection = name; 
-      fields = new Dictionary<string, string>(); 
-    }
-
-    public void AddField(string name, string value)
-    {
-      fields.Add(name, value); 
-    }
-  }
+{    
   internal class IniFile
   {
     private List<Section> sections;
@@ -68,14 +43,11 @@ namespace IniFileParser
 
       currentLine = currentLine.Replace(".", ",");
       foreach (string symbol in unacceptbleSymbols)
-      {
         currentLine = currentLine.Replace(symbol, ""); 
-      }
+      
 
       if (sizeOfString != currentLine.Length)
-      {
         throw new BadFormatOfStringException("Format of file is incorrect!"); 
-      }
     }
 
     private void ParsingNameOfSection(string currentLine)
@@ -96,15 +68,11 @@ namespace IniFileParser
       int indexOfComment = currentLine.IndexOf(";");
 
       if (indexOfFieldSeparator < 0)
-      {
         throw new BadFormatOfStringException("Format of one field in this file is incorrect!");
-      }
       else
       {
         if (indexOfComment < 0)
-        {
           indexOfComment = currentLine.Length + 1;
-        }
 
         int lengthOfValuableString = indexOfComment - 1 - (indexOfFieldSeparator + 3);
         string name = currentLine.Substring(0, indexOfFieldSeparator);
@@ -119,12 +87,12 @@ namespace IniFileParser
     public void ParsingIniFile(string[] readFile)
     {
       if (readFile[0][0] != '[')
-      {
         throw new BadFormatOfFileException("Format of file is incorrect!"); 
-      }
-
+      
       for (int i = 0; i < readFile.Length; i++)
       {
+        if (readFile[i][0] == ';' || readFile[i] == "")
+          continue;
         ParsingNameOfSection(readFile[i]);
         i++;
 
@@ -146,18 +114,28 @@ namespace IniFileParser
       switch (typeToConvertIn)
       {
         case "Int":
-          Convert.ToInt32(pair.Value);
-          break;
+          if (int.TryParse(pair.Value, out int intResult) == false)
+            throw new InvalidConvertToIntException("Cannot covert this value to int!");
+          else
+            Console.WriteLine($"This is a key-value you are looking for:\n" +
+                                    $"Key: {pair.Key}  || Value: {Convert.ToInt32(pair.Value)}\n");
+            break;
         case "Double":
-          Convert.ToDouble(pair.Value);
-          break;
+          if (int.TryParse(pair.Value, out int doubleResult) == false)
+            throw new InvalidConvertToDoubleException("Cannot covert this value to int!");
+          else
+            Console.WriteLine($"This is a key-value you are looking for:\n" +
+                                    $"Key: {pair.Key}  || Value: {Convert.ToDouble(pair.Value)}\n");
+            break;
         case "String":
-          Convert.ToString(pair.Value);
-          break;
+          if (int.TryParse(pair.Value, out int stringResult) == false)
+            throw new InvalidConvertToStringException("Cannot covert this value to int!");
+          else
+            Console.WriteLine($"This is a key-value you are looking for:\n" +
+                                    $"Key: {pair.Key}  || Value: {Convert.ToString(pair.Value)}\n");
+            break;
       }
-
-      Console.WriteLine($"This is a key-value you are looking for:\n" +
-                                    $"Key: {pair.Key}  || Value: {pair.Value}\n");      
+      
     }
 
   }

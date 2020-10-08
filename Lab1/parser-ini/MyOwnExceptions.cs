@@ -15,6 +15,27 @@ namespace MyOwnExceptions
     { }
   }
 
+  class InvalidConvertToIntException : Exception
+  {
+    public InvalidConvertToIntException(string msg)
+    : base(msg)
+    { }
+  }
+
+  class InvalidConvertToDoubleException : Exception
+  {
+    public InvalidConvertToDoubleException(string msg)
+    : base(msg)
+    { }
+  }
+
+  class InvalidConvertToStringException : Exception
+  {
+    public InvalidConvertToStringException(string msg)
+    : base(msg)
+    { }
+  }
+
   class BadFormatOfStringException : Exception
   {
     public BadFormatOfStringException(string msg)

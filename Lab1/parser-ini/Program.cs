@@ -17,7 +17,6 @@ namespace Program
       string[] file;
       IniFile iniFile = new IniFile();
 
-      DrawCoolMenu();
       try
       {
         int option;
@@ -134,6 +133,18 @@ namespace Program
       catch(BadFormatOfStringException ex)
       {
         Console.WriteLine($"Caught format of string exception: {ex.Message}");
+      }
+      catch (InvalidConvertToIntException ex)
+      {
+        Console.WriteLine($"Caught cast exception: {ex.Message}");
+      }
+      catch (InvalidConvertToDoubleException ex)
+      {
+        Console.WriteLine($"Caught cast exception: {ex.Message}");
+      }
+      catch (InvalidConvertToStringException ex)
+      {
+        Console.WriteLine($"Caught cast exception: {ex.Message}");
       }
       catch (Exception ex)
       {
