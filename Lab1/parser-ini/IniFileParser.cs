@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 
 using MyOwnExceptions;
 
 namespace IniFileParser
 {  
-  class Section
+  internal class Section
   {
-    string nameOfSection;
-    Dictionary<string, string> fields;
+    public string NameOfSection { get; }
+    private Dictionary<string, string> fields;
 
     public KeyValuePair<string, string> LookingForField(string field)
     {
@@ -20,36 +21,45 @@ namespace IniFileParser
 
       throw new NotFoundException("Field with this name wasn't found!\n");
     }
-    public string GetName()
-    { return nameOfSection; }
+
     public Section(string name)
     { 
-      nameOfSection = name; 
+      NameOfSection = name; 
       fields = new Dictionary<string, string>(); 
     }
+
     public void AddField(string name, string value)
-    { fields.Add(name, value); }
+    {
+      fields.Add(name, value); 
+    }
   }
-  class IniFile
+  internal class IniFile
   {
-    List<Section> sections;
+    private List<Section> sections;
 
     public IniFile()
-    { sections = new List<Section>(); }
+    {
+      this.sections = new List<Section>(); 
+    }
 
     public Section LookingForSection(string find)
     {
       foreach (Section section in sections)
-        if (section.GetName() == find)
+        if (section.NameOfSection == find)
           return section;
 
       throw new NotFoundException("Section with this name wasn't found!\n");
     }
+
     private void AddSection(string name)
-    { sections.Add(new Section(name)); }
+    {
+      sections.Add(new Section(name)); 
+    }
 
     private void AddFieldToCurrentSection(int index, string name, string value)
-    { sections[index].AddField(name, value); }
+    {
+      sections[index].AddField(name, value); 
+    }
 
     private void IsThisStringCorrect(string currentLine)
     {
@@ -58,10 +68,14 @@ namespace IniFileParser
 
       currentLine = currentLine.Replace(".", ",");
       foreach (string symbol in unacceptbleSymbols)
-      { currentLine = currentLine.Replace(symbol, ""); }
+      {
+        currentLine = currentLine.Replace(symbol, ""); 
+      }
 
       if (sizeOfString != currentLine.Length)
-      { throw new BadFormatOfStringException("Format of file is incorrect!"); }
+      {
+        throw new BadFormatOfStringException("Format of file is incorrect!"); 
+      }
     }
 
     private void ParsingNameOfSection(string currentLine)
@@ -72,7 +86,6 @@ namespace IniFileParser
       currentLine = currentLine.TrimEnd(uselessSymbols);
 
       IsThisStringCorrect(currentLine);
-      
       AddSection(currentLine);
     }
 
@@ -83,11 +96,15 @@ namespace IniFileParser
       int indexOfComment = currentLine.IndexOf(";");
 
       if (indexOfFieldSeparator < 0)
+      {
         throw new BadFormatOfStringException("Format of one field in this file is incorrect!");
-      else 
+      }
+      else
       {
         if (indexOfComment < 0)
+        {
           indexOfComment = currentLine.Length + 1;
+        }
 
         int lengthOfValuableString = indexOfComment - 1 - (indexOfFieldSeparator + 3);
         string name = currentLine.Substring(0, indexOfFieldSeparator);
@@ -95,14 +112,16 @@ namespace IniFileParser
 
         IsThisStringCorrect(name);
         IsThisStringCorrect(value);
-
         AddFieldToCurrentSection(sections.Count - 1, name, value);
       }
     }
+
     public void ParsingIniFile(string[] readFile)
     {
       if (readFile[0][0] != '[')
-      { throw new BadFormatOfFileException("Format of file is incorrect!"); }
+      {
+        throw new BadFormatOfFileException("Format of file is incorrect!"); 
+      }
 
       for (int i = 0; i < readFile.Length; i++)
       {
@@ -114,8 +133,11 @@ namespace IniFileParser
           ParsingField(readFile[i]);
           i++;
         }
-      } 
+
+      }
+      
     }
+
     public void FindSpecificKeyValue(string nameOfSection, string nameOfField, string typeToConvertIn)
     {
       Section temp = LookingForSection(nameOfSection);
@@ -133,8 +155,11 @@ namespace IniFileParser
           Convert.ToString(pair.Value);
           break;
       }
+
       Console.WriteLine($"This is a key-value you are looking for:\n" +
                                     $"Key: {pair.Key}  || Value: {pair.Value}\n");      
     }
+
   }
+
 }
