@@ -11,6 +11,14 @@ namespace IniFileParser
     string nameOfSection;
     public Dictionary<string, string> fields;
 
+    public KeyValuePair<string, string> LookingForField(string field)
+    {
+      foreach (KeyValuePair<string, string> pair in fields)
+        if (pair.Key == field)
+          return pair;
+
+      throw new NotFoundException("Field with this name wasn't found!\n");
+    }
     public string GetName()
     { return nameOfSection; }
     public Section(string name)
@@ -27,7 +35,15 @@ namespace IniFileParser
 
     public IniFile()
     { sections = new List<Section>(); }
-    
+
+    public Section LookingForSection(string find)
+    {
+      foreach (Section section in sections)
+        if (section.GetName() == find)
+          return section;
+
+      throw new NotFoundException("Section with this name wasn't found!\n");
+    }
     private void AddSection(string name)
     { sections.Add(new Section(name)); }
 
@@ -39,6 +55,7 @@ namespace IniFileParser
       int sizeOfString = currentLine.Length;
       string[] unacceptbleSymbols = { "#", "[", "]", "?", "<", ">", "!", " ", "{", "}" };
 
+      currentLine = currentLine.Replace(".", ",");
       foreach (string symbol in unacceptbleSymbols)
       { currentLine = currentLine.Replace(symbol, ""); }
 
@@ -80,7 +97,6 @@ namespace IniFileParser
 
         AddFieldToCurrentSection(sections.Count - 1, name, value);
       }
-
     }
     public void ParsingIniFile(string[] readFile)
     {
@@ -95,19 +111,17 @@ namespace IniFileParser
         while ((i < readFile.Length) && readFile[i] != "")
         {
           ParsingField(readFile[i]);
-
           i++;
         }
-
       }  
 
-      foreach (Section currentSection in this.sections)
-      {
-        Console.WriteLine($"This is section named {currentSection.GetName()}");
-        
-        foreach(KeyValuePair <string, string> fields in currentSection.fields)
-        { Console.WriteLine($"{fields.Key}, {fields.Value}"); }
-      }
+      //foreach (Section currentSection in this.sections)
+      //{
+      //  Console.WriteLine($"This is section named {currentSection.GetName()}");
+      //  
+      //  foreach(KeyValuePair <string, string> fields in currentSection.fields)
+      //  { Console.WriteLine($"{fields.Key}, {fields.Value}"); }
+      //}
     }
 
   }

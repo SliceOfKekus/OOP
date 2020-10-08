@@ -21,4 +21,10 @@ namespace MyOwnExceptions
     : base(msg)
     { }
   }
+  class NotFoundException : Exception
+  {
+    public NotFoundException(string msg)
+    : base(msg)
+    { }
+  }
 }
