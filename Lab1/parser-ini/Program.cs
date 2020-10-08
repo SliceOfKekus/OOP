@@ -36,8 +36,16 @@ namespace Program
                 if (answer != "Yes")                
                   break;
               }
-                Console.WriteLine("Input full path to file:");
-                fileName = Console.ReadLine();
+              
+              Console.WriteLine("Input full path to file:");
+              fileName = Console.ReadLine();
+
+              if (Path.GetExtension(fileName).ToLower() != ".ini")
+              {
+                fileName = "";
+                Console.WriteLine("This is not .ini file. Try to use another one.");
+                goto case 30239366;
+              }
 
               if (!File.Exists(fileName))
               { Console.WriteLine("Incorrect path to file or this file doesn't exist. Who knows..."); }
@@ -77,32 +85,17 @@ namespace Program
               {
                 case 1:
                   {
-                    Section temp = iniFile.LookingForSection(nameOfSection);
-                    KeyValuePair<string, string> pair = temp.LookingForField(nameOfField);
-                    int value = Convert.ToInt32(pair.Value);
-
-                    Console.WriteLine($"This is a key-value you are looking for:\n" +
-                                      $"Key: {pair.Key}  || Value: {pair.Value}\n");
+                    iniFile.FindSpecificKeyValue(nameOfSection, nameOfField, "Int");
                     break;
                   }
                 case 2:
                   {
-                    Section temp = iniFile.LookingForSection(nameOfSection);
-                    KeyValuePair<string, string> pair = temp.LookingForField(nameOfField);
-                    double value = Convert.ToDouble(pair.Value);
-
-                    Console.WriteLine($"This is a key-value you are looking for:\n" +
-                                      $"Key: {pair.Key}  || Value: {pair.Value}\n");
+                    iniFile.FindSpecificKeyValue(nameOfSection, nameOfField, "Double");
                     break;
                   }
                 case 3:
                   {
-                    Section temp = iniFile.LookingForSection(nameOfSection);
-                    KeyValuePair<string, string> pair = temp.LookingForField(nameOfField);
-                    string value = Convert.ToString(pair.Value);
-
-                    Console.WriteLine($"This is a key-value you are looking for:\n" +
-                                      $"Key: {pair.Key}  || Value: {pair.Value}\n");
+                      iniFile.FindSpecificKeyValue(nameOfSection, nameOfField, "String");
                     break;
                   }
               }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 using MyOwnExceptions;
@@ -9,7 +10,7 @@ namespace IniFileParser
   class Section
   {
     string nameOfSection;
-    public Dictionary<string, string> fields;
+    Dictionary<string, string> fields;
 
     public KeyValuePair<string, string> LookingForField(string field)
     {
@@ -113,17 +114,27 @@ namespace IniFileParser
           ParsingField(readFile[i]);
           i++;
         }
-      }  
-
-      //foreach (Section currentSection in this.sections)
-      //{
-      //  Console.WriteLine($"This is section named {currentSection.GetName()}");
-      //  
-      //  foreach(KeyValuePair <string, string> fields in currentSection.fields)
-      //  { Console.WriteLine($"{fields.Key}, {fields.Value}"); }
-      //}
+      } 
     }
+    public void FindSpecificKeyValue(string nameOfSection, string nameOfField, string typeToConvertIn)
+    {
+      Section temp = LookingForSection(nameOfSection);
+      KeyValuePair<string, string> pair = temp.LookingForField(nameOfField);
 
+      switch (typeToConvertIn)
+      {
+        case "Int":
+          Convert.ToInt32(pair.Value);
+          break;
+        case "Double":
+          Convert.ToDouble(pair.Value);
+          break;
+        case "String":
+          Convert.ToString(pair.Value);
+          break;
+      }
+      Console.WriteLine($"This is a key-value you are looking for:\n" +
+                                    $"Key: {pair.Key}  || Value: {pair.Value}\n");      
+    }
   }
-
 }
