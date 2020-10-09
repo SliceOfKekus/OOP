@@ -118,21 +118,18 @@ namespace IniFileParser
             throw new InvalidConvertToIntException("Cannot covert this value to int!");
           else
             Console.WriteLine($"This is a key-value you are looking for:\n" +
-                                    $"Key: {pair.Key}  || Value: {Convert.ToInt32(pair.Value)}\n");
+                                    $"Key: {pair.Key}  || Value: {intResult}\n");
             break;
         case "Double":
-          if (int.TryParse(pair.Value, out int doubleResult) == false)
-            throw new InvalidConvertToDoubleException("Cannot covert this value to int!");
+          if (double.TryParse(pair.Value, out double doubleResult) == false)
+            throw new InvalidConvertToDoubleException("Cannot covert this value to double!");
           else
             Console.WriteLine($"This is a key-value you are looking for:\n" +
-                                    $"Key: {pair.Key}  || Value: {Convert.ToDouble(pair.Value)}\n");
+                                    $"Key: {pair.Key}  || Value: {doubleResult}\n");
             break;
         case "String":
-          if (int.TryParse(pair.Value, out int stringResult) == false)
-            throw new InvalidConvertToStringException("Cannot covert this value to int!");
-          else
             Console.WriteLine($"This is a key-value you are looking for:\n" +
-                                    $"Key: {pair.Key}  || Value: {Convert.ToString(pair.Value)}\n");
+                                    $"Key: {pair.Key}  || Value: {pair.Value}\n");
             break;
       }
       
