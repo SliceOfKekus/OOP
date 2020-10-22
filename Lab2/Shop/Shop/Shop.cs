@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 using System.Text;
@@ -7,7 +8,7 @@ namespace Shop
 {
   internal sealed class Shop
   {
-    private string ShopId { get; set; }
+    public string ShopId { get; set; }
     private string ShopName { get; set; }
     private string ShopAddress { get; set; }
 
@@ -42,28 +43,32 @@ namespace Shop
       return false;
     }
 
+    public long BuyItemInThisShop(ItemInCurrentShop item, long quantity)
+    {
+      if (item.GetQuantity() - quantity >= 0)
+      {
+        item.BuyItems(quantity);
+
+        return quantity * item.GetCost();
+      }
+      else
+        throw new ItemDoesntContainsException("This shop doesn't contain enough items you are looking for.");
+    }
+
     public long CostOfItemInCurrentShop(string itemId)
     {
       if (!items.TryGetValue(itemId, out ItemInCurrentShop item))
-      {
         return item.GetCost();
-      }
       else
-      {
-        // throw;
-      }
+        throw new ItemDoesntExistException($"Can't find item with id:{itemId} in current shop.");
     }
 
-    public void AddItemToCurrentShop(string itemId, Item item, long quantity)
+    public void AddItemToCurrentShop(string itemId, Item item, long quantity, long price)
     {
       if (!items.TryGetValue(itemId, out ItemInCurrentShop currentItem))
-      {
-        items.Add(itemId, new ItemInCurrentShop(item, quantity)); 
-      }
+        items.Add(itemId, new ItemInCurrentShop(item, quantity, price)); 
       else
-      {
         currentItem.AddItems(quantity);
-      }
     }
   }
 }

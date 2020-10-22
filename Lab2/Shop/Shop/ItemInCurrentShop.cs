@@ -9,8 +9,8 @@ namespace Shop
     private long _priceOfItem;
     private long _quantity;
 
-    public ItemInCurrentShop(string itemId, string name, long price, long quantity)
-      : base(itemId, name)
+    public ItemInCurrentShop(Item temp, long quantity, long price)
+      : base(temp)
     {
       _priceOfItem = price;
       _quantity = quantity;
@@ -20,12 +20,6 @@ namespace Shop
       : base(temp)
     {
       _quantity = 0;
-    }
-
-    public ItemInCurrentShop(Item temp, long quantity)
-      : base(temp)
-    {
-      _quantity = quantity;
     }
 
     public void SetCost(long cost)
@@ -41,6 +35,11 @@ namespace Shop
     public void AddItems(long quantity)
     {
       _quantity += quantity;
+    }
+
+    public void BuyItems(long quantity)
+    {
+      _quantity -= quantity;
     }
 
     public long GetQuantity()

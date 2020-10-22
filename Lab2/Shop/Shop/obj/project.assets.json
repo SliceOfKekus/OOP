@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\New folder\\Shop\\Shop\\Shop.csproj",
+      "projectUniqueName": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\Lab2\\Shop\\Shop\\Shop.csproj",
       "projectName": "Shop",
-      "projectPath": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\New folder\\Shop\\Shop\\Shop.csproj",
+      "projectPath": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\Lab2\\Shop\\Shop\\Shop.csproj",
       "packagesPath": "C:\\Users\\SliceOfKekus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\New folder\\Shop\\Shop\\obj\\",
+      "outputPath": "C:\\Users\\SliceOfKekus\\Documents\\OOP (C#)\\Lab2\\Shop\\Shop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\SliceOfKekus\\AppData\\Roaming\\NuGet\\NuGet.Config",
