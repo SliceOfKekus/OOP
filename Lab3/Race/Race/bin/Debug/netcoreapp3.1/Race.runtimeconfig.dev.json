@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\SliceOfKekus\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\SliceOfKekus\\.nuget\\packages"
+    ]
+  }
+}
