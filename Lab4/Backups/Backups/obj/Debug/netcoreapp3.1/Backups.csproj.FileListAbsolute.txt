@@ -1,0 +1,13 @@
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\bin\Debug\netcoreapp3.1\Backups.exe
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\bin\Debug\netcoreapp3.1\Backups.deps.json
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\bin\Debug\netcoreapp3.1\Backups.runtimeconfig.json
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\bin\Debug\netcoreapp3.1\Backups.runtimeconfig.dev.json
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\bin\Debug\netcoreapp3.1\Backups.dll
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\bin\Debug\netcoreapp3.1\Backups.pdb
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\obj\Debug\netcoreapp3.1\Backups.csprojAssemblyReference.cache
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\obj\Debug\netcoreapp3.1\Backups.AssemblyInfoInputs.cache
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\obj\Debug\netcoreapp3.1\Backups.AssemblyInfo.cs
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\obj\Debug\netcoreapp3.1\Backups.csproj.CoreCompileInputs.cache
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\obj\Debug\netcoreapp3.1\Backups.dll
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\obj\Debug\netcoreapp3.1\Backups.pdb
+C:\Users\SliceOfKekus\Documents\OOP (C#)\Lab4\Backups\Backups\obj\Debug\netcoreapp3.1\Backups.genruntimeconfig.cache
