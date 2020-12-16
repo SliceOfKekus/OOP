@@ -6,45 +6,30 @@ namespace Shop
 {
   internal class ItemInCurrentShop : Item
   {
-    private long _priceOfItem;
-    private long _quantity;
+    public long PriceOfItem { get; set; }
+    public long Quantity { private set; get; }
 
     public ItemInCurrentShop(Item temp, long quantity, long price)
       : base(temp)
     {
-      _priceOfItem = price;
-      _quantity = quantity;
+      PriceOfItem = price;
+      Quantity = quantity;
     }
 
     public ItemInCurrentShop(Item temp)
       : base(temp)
     {
-      _quantity = 0;
-    }
-
-    public void SetCost(long cost)
-    {
-      _priceOfItem = cost; 
-    }
-
-    public long GetCost()
-    {
-      return _priceOfItem; 
+      Quantity = 0;
     }
 
     public void AddItems(long quantity)
     {
-      _quantity += quantity;
+      Quantity += quantity;
     }
 
     public void BuyItems(long quantity)
     {
-      _quantity -= quantity;
-    }
-
-    public long GetQuantity()
-    {
-      return _quantity;
+      Quantity -= quantity;
     }
   }
 }

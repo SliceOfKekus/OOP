@@ -45,11 +45,11 @@ namespace Shop
 
     public long BuyItemInThisShop(ItemInCurrentShop item, long quantity)
     {
-      if (item.GetQuantity() - quantity >= 0)
+      if (item.Quantity - quantity >= 0)
       {
         item.BuyItems(quantity);
 
-        return quantity * item.GetCost();
+        return quantity * item.PriceOfItem;
       }
       else
         throw new ItemDoesntContainsException("This shop doesn't contain enough items you are looking for.");
@@ -58,7 +58,7 @@ namespace Shop
     public long CostOfItemInCurrentShop(string itemId)
     {
       if (!items.TryGetValue(itemId, out ItemInCurrentShop item))
-        return item.GetCost();
+        return item.PriceOfItem;
       else
         throw new ItemDoesntExistException($"Can't find item with id:{itemId} in current shop.");
     }

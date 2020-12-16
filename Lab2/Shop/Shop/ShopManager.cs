@@ -68,7 +68,7 @@ namespace Shop
         if (shop.DoesThisItemExistHere(itemId, out ItemInCurrentShop item))
         {
           containsSomewhere = true;
-          if ((temp = item.GetCost()) <= costOfCheapestItem)
+          if ((temp = item.PriceOfItem) <= costOfCheapestItem)
           {
             shopId = shop.ShopId;
             costOfCheapestItem = temp;
@@ -90,7 +90,7 @@ namespace Shop
         {
           int count = 0;
 
-          for (long cost = 0; cost <= myMoney; cost += item.GetCost())
+          for (long cost = 0; cost <= myMoney; cost += item.PriceOfItem)
             count++;
 
           Console.WriteLine($"On {myMoney} you can buy {count} times this item : {item.GetId()} aka {item.GetName()}");
@@ -119,11 +119,11 @@ namespace Shop
 
     public string WhereIsTheCheapestItems(Dictionary<string, long> idAndQuantity)
     {
-      SortedList<long, string> costAndId = new SortedList<long, string>();
+      SortedList<long, Shop> costAndId = new SortedList<long, Shop>();
 
       foreach (KeyValuePair<String, Shop> shop in allShops)
       {
-        long tempCost = 0;
+        long tempCost = Int64.MaxValue;
         bool itemContains = true;
 
         foreach (KeyValuePair<string, long> idQnty in idAndQuantity)
@@ -131,8 +131,8 @@ namespace Shop
           itemContains = true;
           if (shop.Value.DoesThisItemExistHere(idQnty.Key, out ItemInCurrentShop item))
           {
-            if (item.GetQuantity() - idQnty.Value >= 0)
-              tempCost += shop.Value.BuyItemInThisShop(item, idQnty.Value);
+            if (item.Quantity - idQnty.Value >= 0)
+              tempCost += item.PriceOfItem * idQnty.Value;
           }
           else
           {
@@ -143,12 +143,18 @@ namespace Shop
 
         if (itemContains)
         {
-          costAndId.Add(tempCost, shop.Key);
+          costAndId.Add(tempCost, shop.Value);
         }
       }
 
       if (costAndId.Count != 0)
-        return costAndId.Values[0];
+      {
+        //foreach (KeyValuePair<string, long> idQnty in idAndQuantity)        
+        //  if (costAndId.Values[0].DoesThisItemExistHere(idQnty.Key, out ItemInCurrentShop item))
+        //      costAndId.Values[0].BuyItemInThisShop(item, idQnty.Value);
+
+        return costAndId.Values[0].ShopId;
+      }
       else
         throw new ItemDoesntContainsException("This combination of items doesn't contains ");
     }

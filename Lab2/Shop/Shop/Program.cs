@@ -44,7 +44,7 @@ namespace Program
         listOfItems.Add("8", 15);
 
         manager.WhatItemsICanBuyOnThisMoneyInThisShop(manager.WhereIsTheCheapestItems(listOfItems), 1000);
-        
+        manager.BuyItemsInThisShop("1", listOfItems);
       }
       catch (ShopDoesntExistException ex)
       {
