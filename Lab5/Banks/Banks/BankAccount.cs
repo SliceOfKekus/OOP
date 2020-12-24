@@ -12,5 +12,7 @@ namespace Banks
     public abstract void TopUpAccount(double money);
     public abstract void TransferToAnotherBankAccount(BankAccount bank, double money);
     public abstract void InterestOnTheBalance();
+
+    public abstract double BackToTheFuture(DateTime futureDate);
   }
 }

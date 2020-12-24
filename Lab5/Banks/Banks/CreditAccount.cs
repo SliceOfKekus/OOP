@@ -19,7 +19,7 @@ namespace Banks
       whatBankContainsThisBankAccount = bank;
       balance = 0;
     }
-    //?
+    
     public override void InterestOnTheBalance() 
     {
       return;
@@ -37,8 +37,7 @@ namespace Banks
           throw new Exception("MaxWithDrawValue greater than money");
 
       if (balance - money < CreditLimit)
-      {
-        // Проверить temp на корректность вычислений 
+      {        
         var temp = CreditLimit - (balance - money);
         balance -= (money + temp * whatBankContainsThisBankAccount.TransferMoneyCommission);
       }
@@ -53,6 +52,11 @@ namespace Banks
 
       this.WithdrawMoney( money );
       bank.TopUpAccount( money );
+    }
+
+    public override double BackToTheFuture(DateTime futureDate)
+    {
+      throw new Exception("Nothing will happen, Silly!");
     }
   }
 }

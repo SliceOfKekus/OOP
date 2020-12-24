@@ -57,7 +57,7 @@ namespace Shop
 
     public long CostOfItemInCurrentShop(string itemId)
     {
-      if (!items.TryGetValue(itemId, out ItemInCurrentShop item))
+      if (items.TryGetValue(itemId, out ItemInCurrentShop item))
         return item.PriceOfItem;
       else
         throw new ItemDoesntExistException($"Can't find item with id:{itemId} in current shop.");

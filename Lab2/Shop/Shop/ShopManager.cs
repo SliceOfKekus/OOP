@@ -109,6 +109,14 @@ namespace Shop
 
         foreach (KeyValuePair<string, long> items in itemsAndQuantity)
         {
+          if (!shop.DoesThisItemExistHere(items.Key, out ItemInCurrentShop item))
+            throw new ShopDoesntExistException($"Shop with id:{shopId} doesn't exist.");
+          if (item.Quantity < items.Value)
+            throw new ItemDoesntContainsException("This combination of items doesn't contains ");
+        }
+
+        foreach (KeyValuePair<string, long> items in itemsAndQuantity)
+        {
           if (shop.DoesThisItemExistHere(items.Key, out ItemInCurrentShop item))
             cost += shop.BuyItemInThisShop(item, items.Value);
         }

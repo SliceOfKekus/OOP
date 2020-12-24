@@ -50,6 +50,11 @@ namespace Banks
         firstClient.GetAccount(1, out BankAccount firstClientAccount);
         firstClientAccount.TopUpAccount(12000);
         firstClientAccount.WithdrawMoney(5000);
+
+        //Added BackToTheFuture call
+
+        Console.WriteLine(secondClientAccount.BackToTheFuture(DateTime.Now.AddMonths(10)));
+
         banks[0].TransferFromFirstAccountToSecond(banks[2], 2000, firstBankClientId, 1, thirdBankClientId, 1);
         banks[0].CancelTransaction(0);
       }

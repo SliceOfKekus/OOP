@@ -23,13 +23,24 @@ namespace Backups
 
       firstBackup.CreateFullRestorePoint();
       firstBackup.MaxQuantityOfRestorePoints = 1;
-      firstBackup.DeleteRestorePoints(false, true, false);
+
+      var deleteAlgo = new List<IAlgorithm>
+      {
+        new QuantityLimitAlgo(firstBackup.MaxQuantityOfRestorePoints)
+      };
+
+      firstBackup.DeleteRestorePoints(deleteAlgo, HybridType.Maximum);
 
       Backup secondBackup = new Backup(files, "2");
       
       secondBackup.CreateFullRestorePoint();
       secondBackup.MaxBackupSize = 350; //350 т.к. файлы размерами по 200
-      secondBackup.DeleteRestorePoints(false, false, true);
+
+      var secondDeleteAlgo = new List<IAlgorithm>
+      {
+        new BackupSizeAlgo(secondBackup.MaxBackupSize)
+      };
+      secondBackup.DeleteRestorePoints(secondDeleteAlgo, HybridType.Maximum);
 
       FileInfo thirdTestFile = new FileInfo("C:\\Users\\SliceOfKekus\\Desktop\\testfile3.txt");
       Backup thirdBackup = new Backup(files, "3");
@@ -48,7 +59,14 @@ namespace Backups
       fourthBackup.CreateFullRestorePoint();
       fourthBackup.MaxQuantityOfRestorePoints = 1;
       fourthBackup.MaxBackupSize = 350;
-      secondBackup.DeleteRestorePoints(false, true, true);
+
+      var thirdDeleteAlgo = new List<IAlgorithm>
+      {
+        new BackupSizeAlgo(secondBackup.MaxBackupSize),
+        new QuantityLimitAlgo(secondBackup.MaxQuantityOfRestorePoints)
+      };
+
+      fourthBackup.DeleteRestorePoints(thirdDeleteAlgo, HybridType.Minimum);
     }
   }
 }

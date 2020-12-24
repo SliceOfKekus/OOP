@@ -7,13 +7,15 @@ namespace Backups
 {
   public enum TypeOfStore { Archive, directory }
 
+  public enum HybridType { Maximum, Minimum }
+
   internal class Backup
   {
     public string Id { get; }
     public DateTime CreationTime { get; }
-    public DateTime LifeTime { set; private get; }
-    public int MaxQuantityOfRestorePoints { set; private get; }
-    public int MaxBackupSize { set; private get; }
+    public DateTime LifeTime { set; get; }
+    public int MaxQuantityOfRestorePoints { set; get; }
+    public int MaxBackupSize { set; get; }
     public TypeOfStore typeOfStore;
 
     private long backupSize;
@@ -101,66 +103,103 @@ namespace Backups
       typeOfStore = TypeOfStore.Archive;
     } 
 
-    public void DeleteRestorePoints( bool timeLimit = false,
-                                      bool quantityLimit = false,
-                                      bool backupSizeLimit = false )
+    public void DeleteRestorePoints(List<IAlgorithm> algorithms, HybridType hybridType)
     {
-      //Что делать, если у нас есть IncrementaleRestorePoints?
-      List<RestorePoint> timeLimitFiles = new List<RestorePoint>();
-      if (timeLimit)
-      {        
-        foreach (var restorePoint in restorePoints)
-          if (restorePoint.CreationTime >= LifeTime)
-            timeLimitFiles.Add(restorePoint);
+      var listOfResPointLists = new List<List<RestorePoint>>();
+
+      foreach (var algo in algorithms)
+      {
+        listOfResPointLists.Add(algo.DoSmthWithRestorePoint(restorePoints));
       }
 
-      List<RestorePoint> quantityLimitFiles = new List<RestorePoint>();
-      if (quantityLimit)
+      foreach (var list in listOfResPointLists)
       {
-        if (MaxQuantityOfRestorePoints >= restorePoints.Count)
-          quantityLimitFiles = new List<RestorePoint>(restorePoints);
+        Int32 index = 0;
+        Int32 tempSize = listOfResPointLists.Count;
+
+
+        if (hybridType == HybridType.Maximum)
+        {
+          Int32 maxSize = -1;
+
+          for (int count = 0; count < tempSize; count++)
+            if (listOfResPointLists[count].Count > maxSize)
+              index = count;
+
+
+          restorePoints.Clear();
+          restorePoints = listOfResPointLists[index];
+        }
         else
         {
-          quantityLimitFiles = new List<RestorePoint>();
+          Int32 minSize = Int32.MaxValue;
 
-          if (MaxQuantityOfRestorePoints <= 0)
-            throw new Exception("can not store less or equal than zero restore points.");
+          for (int count = 0; count < tempSize; count++)
+            if (listOfResPointLists[count].Count < minSize)
+              index = count;
 
-          int count = restorePoints.Count - MaxQuantityOfRestorePoints;
-          for (; count <= restorePoints.Count - 1; count++)
-            quantityLimitFiles.Add(restorePoints[count]);
-        }
+
+          restorePoints.Clear();
+          restorePoints = listOfResPointLists[index];
+        }     
       }
 
-      List<RestorePoint> backupSizeLimitFiles = new List<RestorePoint>();
-      if (backupSizeLimit)
-      {
-        long tempSum = 0;
-        foreach (var restorePoint in restorePoints)
-          if (restorePoint.Size < MaxBackupSize 
-              && (tempSum + restorePoint.Size) < MaxBackupSize)
-          {
-            backupSizeLimitFiles.Add(restorePoint);
-            tempSum += restorePoint.Size;
-          }
-      }
-
-      restorePoints.Clear();   
-
-      if (quantityLimit
-          && quantityLimitFiles.Count >= timeLimitFiles.Count
-          && quantityLimitFiles.Count >= backupSizeLimitFiles.Count)
-        restorePoints = quantityLimitFiles;
-
-      if (timeLimit
-          && timeLimitFiles.Count >= quantityLimitFiles.Count
-          && timeLimitFiles.Count >= backupSizeLimitFiles.Count)
-        restorePoints = timeLimitFiles;
-
-      if (backupSizeLimit
-          && backupSizeLimitFiles.Count >= quantityLimitFiles.Count
-          && backupSizeLimitFiles.Count >= timeLimitFiles.Count)
-        restorePoints = backupSizeLimitFiles;
+      ////Что делать, если у нас есть IncrementaleRestorePoints?
+      //List<RestorePoint> timeLimitFiles = new List<RestorePoint>();
+      //if (timeLimit)
+      //{        
+      //  foreach (var restorePoint in restorePoints)
+      //    if (restorePoint.CreationTime >= LifeTime)
+      //      timeLimitFiles.Add(restorePoint);
+      //}
+      //
+      //List<RestorePoint> quantityLimitFiles = new List<RestorePoint>();
+      //if (quantityLimit)
+      //{
+      //  if (MaxQuantityOfRestorePoints >= restorePoints.Count)
+      //    quantityLimitFiles = new List<RestorePoint>(restorePoints);
+      //  else
+      //  {
+      //    quantityLimitFiles = new List<RestorePoint>();
+      //
+      //    if (MaxQuantityOfRestorePoints <= 0)
+      //      throw new Exception("can not store less or equal than zero restore points.");
+      //
+      //    int count = restorePoints.Count - MaxQuantityOfRestorePoints;
+      //    for (; count <= restorePoints.Count - 1; count++)
+      //      quantityLimitFiles.Add(restorePoints[count]);
+      //  }
+      //}
+      //
+      //List<RestorePoint> backupSizeLimitFiles = new List<RestorePoint>();
+      //if (backupSizeLimit)
+      //{
+      //  long tempSum = 0;
+      //  foreach (var restorePoint in restorePoints)
+      //    if (restorePoint.Size < MaxBackupSize 
+      //        && (tempSum + restorePoint.Size) < MaxBackupSize)
+      //    {
+      //      backupSizeLimitFiles.Add(restorePoint);
+      //      tempSum += restorePoint.Size;
+      //    }
+      //}
+      //
+      //restorePoints.Clear();   
+      //
+      //if (quantityLimit
+      //    && quantityLimitFiles.Count >= timeLimitFiles.Count
+      //    && quantityLimitFiles.Count >= backupSizeLimitFiles.Count)
+      //  restorePoints = quantityLimitFiles;
+      //
+      //if (timeLimit
+      //    && timeLimitFiles.Count >= quantityLimitFiles.Count
+      //    && timeLimitFiles.Count >= backupSizeLimitFiles.Count)
+      //  restorePoints = timeLimitFiles;
+      //
+      //if (backupSizeLimit
+      //    && backupSizeLimitFiles.Count >= quantityLimitFiles.Count
+      //    && backupSizeLimitFiles.Count >= timeLimitFiles.Count)
+      //  restorePoints = backupSizeLimitFiles;
     } 
 
 

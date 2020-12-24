@@ -80,5 +80,31 @@ namespace Banks
       this.WithdrawMoney( money );
       bank.TopUpAccount( money );
     }
+
+    public override double BackToTheFuture(DateTime futureDate)
+    {
+      DateTime temp = DateTime.Now;
+      DateTime currentDate = DateTime.Now;
+      int years = futureDate.Year - DateTime.Now.Year;
+      int months = futureDate.Month - DateTime.Now.Month + years * 12;
+
+      if (months == 0)
+        throw new Exception("Nothing will happen");
+
+      double tempMonthBalance = balance;
+      double tempBalance = balance;
+
+      for (; temp.Month - currentDate.Month + (temp.Year - currentDate.Year) * 12 < months;)
+      {
+        temp = temp.AddMonths(1);
+
+        for (int count = 0; count < (temp - currentDate).TotalDays; count++)
+          tempBalance += tempBalance * whatBankContainsThisBankAccount.Percent / 36500;
+
+        tempMonthBalance = tempBalance;
+      }
+
+      return tempMonthBalance;
+    }
   }
 }
