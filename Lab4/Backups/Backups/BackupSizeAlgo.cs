@@ -16,15 +16,26 @@ namespace Backups
     {
       List<RestorePoint> backupSizeLimitFiles = new List<RestorePoint>();
       
-        long tempSum = 0;
-        foreach (var restorePoint in restorePoints)
-          if (restorePoint.Size < maxBackupSize
-              && (tempSum + restorePoint.Size) < maxBackupSize)
-          {
-            backupSizeLimitFiles.Add(restorePoint);
-            tempSum += restorePoint.Size;
-          }
+      long tempSum = 0;
+      RestorePoint lastFull = null;
 
+      foreach (var restorePoint in restorePoints)
+      {
+        if (restorePoint is IncrementaleRestorePoint
+            && lastFull == null)
+          continue;
+
+        if (restorePoint.Size < maxBackupSize
+            && (tempSum + restorePoint.Size) < maxBackupSize)
+        {
+          if (restorePoint is FullRestorePoint)
+            lastFull = restorePoint;
+          
+
+          backupSizeLimitFiles.Add(restorePoint);
+          tempSum += restorePoint.Size;
+        }
+      }
       return backupSizeLimitFiles;
     }
   }

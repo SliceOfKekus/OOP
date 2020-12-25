@@ -28,7 +28,12 @@ namespace Backups
 
         int count = restorePoints.Count - maxQuantity;
         for (; count <= restorePoints.Count - 1; count++)
+        {
+          if (restorePoints[count] is IncrementaleRestorePoint)
+            continue;
+
           quantityLimitFiles.Add(restorePoints[count]);
+        }
       }
 
       return quantityLimitFiles;

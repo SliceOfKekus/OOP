@@ -18,9 +18,20 @@ namespace Backups
 
       foreach (var resPoint in restorePoints)
       {
+        RestorePoint lastFullRestorePoint = null;
         foreach (var restorePoint in restorePoints)
-          if (restorePoint.CreationTime >= timeLimit)
-            finalList.Add(restorePoint);
+        {
+          if (restorePoint.CreationTime < timeLimit)
+            continue;
+
+          if (restorePoint is IncrementaleRestorePoint && lastFullRestorePoint == null)
+            continue;
+
+          if (restorePoint is FullRestorePoint)
+            lastFullRestorePoint = restorePoint;
+
+          finalList.Add(restorePoint);
+        }
       }
 
       return finalList;
